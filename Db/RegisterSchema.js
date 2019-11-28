@@ -1,4 +1,6 @@
 let mongoose=require('mongoose');
+let jwt=require('jsonwebtoken');
+let config=require('config');
 let Joi=require('@hapi/joi')
 let urSchema=new mongoose.Schema({
     firstName:{type:String,required:true,minlength:5,maxlength:250},
@@ -8,12 +10,17 @@ let urSchema=new mongoose.Schema({
         userPassword:{type:String,required:true}
     },
     termsAcceptCheck:{type:Boolean,required:true},
-    resetPasswordToken:{type:String,required:true},
-    resetPasswordExpire:{type:String,required:true},
+    newsLetterCheck:{type:Boolean},
+    resetPasswordToken:{type:String},
+    resetPasswordExpire:{type:Date},
     isAdmin:{type:Boolean},
-    recordUpdate:{type:Date,required:false},
-    updatedate:{type:Date,required:false}
+    recordUpdate:{type:Date},
+    updatedate:{type:Date}
 });
+urSchema.methods.Generatetoken=function(){
+    let token =jwt.sign({_id:this._id,isAdmin:this.isAdmin},config.get('Pkapps'));
+    return token;
+}
 let register=mongoose.model("Register",urSchema);
 
 function ValidationError(message){
@@ -25,8 +32,9 @@ function ValidationError(message){
             userPassword:Joi.string().required()
         },
         termsAcceptCheck:Joi.boolean().required(),
-        resetPasswordToken:Joi.string().required(),
-        resetPasswordExpire:Joi.string().required(),
+        resetPasswordToken:Joi.string(),
+        resetPasswordExpire:Joi.string(),
+        newsLetterCheck:Joi.boolean(),
         isAdmin:Joi.boolean(),
         recordUpdate:Joi.date(),
         updatedate:Joi.date()
@@ -34,14 +42,4 @@ function ValidationError(message){
     return Schema.validate(message);
 
 }
-
-
-
-
-
-
-
-
-
-
-module.exports={register,ValidationError};
+module.exports={register,ValidationError,urSchema};
