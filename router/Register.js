@@ -16,11 +16,6 @@ router.post('/register', async (req, res) => {
             lastName: req.body.lastName,
             UserLogin:req.body.UserLogin,
             termsAcceptCheck: req.body.termsAcceptCheck,
-            resetPasswordToken: req.body.resetPasswordToken,
-            resetPasswordExpire: req.body.resetPasswordExpire,
-            isAdmin: req.body.isAdmin,
-            recordDate: req.body.recordDate,
-            updateDate: req.body.updateDate,
             newsLetterCheck:req.body.newsLetterCheck
         });
         let salt = await bcrypt.genSalt(10);
