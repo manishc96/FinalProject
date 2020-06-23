@@ -15,6 +15,7 @@ let UserCartItem=require('./router/usercartItem');
 let app=express();
 app.use(express.json());
 let mongoose=require('mongoose');
+app.use(cors());
 let port=4500;
 app.use('/uploads',express.static(__dirname + '/uploads'));
 mongoose.connect("mongodb://localhost/Project",{
@@ -39,7 +40,7 @@ app.use('/api/',Product);
 app.use('/api/imageupload', UploadFile);
 app.use('/api/',CartItem);
 app.use('/api/',UserCartItem);
-app.use(cors());
+
 
 app.listen(port, () => console.log(`this app is working on port number ${port}`));
 
