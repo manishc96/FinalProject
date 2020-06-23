@@ -8,7 +8,7 @@ let PrSchema=new moongose.Schema({
     price:{type:Number,required:true,minlength:1},
     offerPrice:{type:Number,required:true,minlength:1},
     isAvailable:{type:Boolean},
-    isTodayOffer:{type:Boolean,required:true},
+    isTodayOffer:{type:Boolean},
     Category:{type:String,required:true,minlength:3,maxlength:100},
     subCategory:{type:String,required:true,minlength:3,maxlength:100},
     isAdmin:{type:Boolean},
