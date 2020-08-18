@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
         let password = await bcrypt.compare(req.body.UserLogin.userPassword, user.UserLogin.userPassword);
         if (!password) { return res.status(403).send({ message: 'Invalid password!' }) };
         let token = user.Generatetoken();
-        res.send({ message: "login sucessful", d: token })
+        res.header(`x-auth-token`, token).send({ message: "login sucessful", d: token })
 
     }
     catch (ex) {
